@@ -5,6 +5,7 @@ sudo apt install python3-opencv
 sudo apt install python3-numpy
 """
 
+
 import cv2
 import numpy as np
 from PIL import Image
