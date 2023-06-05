@@ -1,4 +1,4 @@
-# server.py - send rgb data
+# cam_server.py - sends rgb data
 
 import socket
 
@@ -16,7 +16,7 @@ class Server:
 
     def _handle_connection(self, connection: dict):
         while True:
-            data = connection["connection"].recv(3).decode("ascii")
+            data = connection["connection"].recv(1024).decode("ascii")
             if len(data) > 0:
                 print(f"[+] message received: {data}")
                 if data == "get":

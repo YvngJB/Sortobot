@@ -11,6 +11,7 @@ import numpy as np
 from PIL import Image
 import keyboard
 import time
+import datetime
 
 class Camera:
     def __init__(self, camera_index=0) -> None:
@@ -67,7 +68,8 @@ class Camera:
 
             colors = ["Red", "Green", "Blue", "Yellow"]
             if max_contour_color is not None:
-                print(colors[max_contour_color])
+                # print("[+] Detected color is : " , colors[max_contour_color], datetime.datetime.fromtimestamp(time.time()))
+                print("[+] Detected color is : " , colors[max_contour_color])
                 return colors[max_contour_color]
             else:
                 return None
@@ -77,11 +79,11 @@ class Camera:
             return None
 
     def scan(self):
-        rgb = self._get_rgb()
-        if rgb is not None:
-            return rgb
-        else:
-            return None
+            rgb = self._get_rgb()
+            if rgb is not None:
+                return rgb
+            else:
+                return None
 
 if __name__ == "__main__":
     def test_scan():
@@ -98,4 +100,4 @@ if __name__ == "__main__":
             if keyboard.is_pressed('space'):
                 break
 
-    test_scan()
+    
