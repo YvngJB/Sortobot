@@ -1,2 +1,2 @@
 # Sortobot
-DoBot Projekt Jason, Jannis, Dominik, Adam
+DoBot Projekt Adam, Jannis, Dominik, Jason
