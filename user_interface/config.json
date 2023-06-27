@@ -1,0 +1,12 @@
+{
+    "general": {
+        "debug_mode":false,
+        "page_refresh_rate":1000,
+        "cube_animation":0
+    },
+    "mqtt_connection": {
+        "host":"10.100.20.101",
+        "port":1883,
+        "topic":"/robby/mqtt"
+    }
+}
