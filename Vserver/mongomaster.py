@@ -36,7 +36,7 @@ class MongoMaster:
 
     def add_scan(self, scan: Scan) -> None:
         #Add a list of product objects to the active collection
-        self.collection.insert_one(scan.to_dict())
+        self.collection.insert_one(scan.write_dict())
 
     def get_products(self) -> list:
         if self.collection is not None:
