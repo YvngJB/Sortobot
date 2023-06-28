@@ -1,5 +1,5 @@
 # Sortobot
-'DoBot Projekt Adam, Jannis, Dominik, Jason
+DoBot Projekt Adam, Jannis, Dominik, Jason
 
 # Inhaltsverzeichnis 
   1) Raspberry Pi
@@ -21,9 +21,9 @@ Verlauf:
   - Das Übermitteln der Daten auf PC1 erfolgt dann mittels TCP/IP 
 
 
-Dokumentation: Farberkennung mit OpenCV und Raspberry Pi
+# Dokumentation: Farberkennung mit OpenCV und Raspberry Pi
 
-Der vorliegende Code ist eine Implementierung zur Farberkennung mithilfe der OpenCV-Bibliothek auf einem Raspberry Pi. Er ermöglicht das Erfassen eines Bildes von der Kamera, die Extraktion eines zentralen Ausschnitts und die Bestimmung der vorherrschenden Farbe in diesem Ausschnitt.
+Der  Code ist eine Implementierung zur Farberkennung mithilfe der OpenCV-Bibliothek auf einem Raspberry Pi. Er ermöglicht das Erfassen eines Bildes von der Kamera, die Extraktion eines zentralen Ausschnitts und die Bestimmung der vorherrschenden Farbe in diesem Ausschnitt.
 
 Um den Code auszuführen, müssen zunächst die erforderlichen Abhängigkeiten installiert werden. Dies kann mit den folgenden Befehlen auf einem Raspberry Pi erfolgen:
 
