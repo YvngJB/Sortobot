@@ -143,30 +143,6 @@ Die Methode `scan` ruft `_get_rgb` auf und gibt den erkannten Farbwert zurück, 
 
 . Andernfalls wird `None` zurückgegeben.
 
-```python
-if __name__ == "__main__":
-    def test_scan():
-        cam = Camera(camera_index=0)
-        start_time = time.time()
-        while True:
-            current_time = time.time()
-            if current_time - start_time >= 3:
-                color = cam.scan()
-                if color is not None:
-                    print(f"Detected color: {color}")
-                start_time = current_time
-
-            if keyboard.is_pressed('space'):
-                break
-```
-
-Der Hauptteil des Codes überprüft, ob das Skript direkt ausgeführt wird, indem er prüft, ob `__name__` gleich `"__main__"` ist. Wenn dies der Fall ist, wird die Funktion `test_scan` definiert und ausgeführt.
-
-`test_scan` erstellt eine Instanz der Klasse `Camera` und startet eine Schleife, die alle 3 Sekunden die `scan`-Methode aufruft, um die Farbe zu erkennen. Wenn eine Farbe erkannt wird, wird sie ausgegeben. Die Schleife wird beendet, wenn die Leertaste gedrückt wird.
-
-Dieser Codeausschnitt dient der Demonstration der Farberkennung und kann entsprechend angepasst werden, um ihn in andere Anwendungen zu integrieren.
-
-Zum Schluss wird die Klasse `Scan()` aufgerufen, die vermutlich eine weitere Funktion oder Klasse aus einer anderen Datei darstellt und nicht direkt mit dem gegebenen Code zusammenhängt.
 
 # 2) PC1
 Aufgaben des PC1:
