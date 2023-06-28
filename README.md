@@ -139,11 +139,9 @@ Die erkannte Farbe wird als Text ausgegeben, und der Name der Farbe wird als Rü
             return None
 ```
 
-Die Methode `scan` ruft `_get_rgb` auf und gibt den erkannten Farbwert zurück, sofern einer erkannt wurde
+Die Methode `scan` ruft `_get_rgb` auf und gibt den erkannten Farbwert zurück, sofern einer erkannt wurde. Andernfalls wird `None` zurückgegeben.
 
-. Andernfalls wird `None` zurückgegeben.
-
-
+#
 # 2) PC1
 Aufgaben des PC1:
   - Steuerung des Roboters
