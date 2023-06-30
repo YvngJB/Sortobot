@@ -157,7 +157,7 @@ Aufgaben des PC2:
   - Installation eines MQTT Servers
   - Bereitstellen der Daten per NodeRed
 
-Verlauf: <br>
+Verlauf:  <br>
 Nach Aufgabenstellung mussten wir auf einer VM eine MongoDB Datenbank installieren, der die Methode des Shardings zugrunde liegt:
 
 Schritt 1: Erstellen der Verzeichnisse
