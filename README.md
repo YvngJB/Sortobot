@@ -72,59 +72,83 @@ Die Klasse `Camera` dient als Schnittstelle zur Kamera des Raspberry Pi. In der 
                 self._last_capture_time = current_time
 ```
 
-Die Methode `_capture` erfasst ein Bild von der Kamera und speichert es in einem angegebenen Dateipfad. Die Aufnahme erfolgt nur, wenn seit der letzten Aufnahme mindestens 3 Sekunden vergangen sind. Das aufgenommene Bild wird zugeschnitten, indem ein zentraler Ausschnitt mit einer Größe von 250x250 Pixeln ausgewählt wird. Dieser Ausschnitt wird dann als JPEG-Bild im angegebenen Pfad gespeichert.
+Methode `_capture` erfasst ein Bild von der Kamera und speichert es in einem angegebenen Dateipfad. Die Aufnahme erfolgt nur, wenn seit der letzten Aufnahme mindestens 3 Sekunden vergangen sind. Das aufgenommene Bild wird zugeschnitten, indem ein zentraler Ausschnitt mit einer Größe von 250x250 Pixeln ausgewählt wird. Dieser Ausschnitt wird dann als JPEG-Bild im angegebenen Pfad gespeichert.
+
+Funktion `_get_rgb` dient dazu, die vorherrschende Farbe eines Bildes zu erkennen. 
 
 ```python
-    def _get_rgb(self) -> tuple:
-        try:
-            self._capture("temp.jpg")
-            img = cv2.imread("temp.jpg")
-            img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-
-            lower_red = np.array([0,50, 50])
-            upper_red = np.array([10, 255, 255])
-            lower_green = np.array([50, 50, 50])
-            upper_green = np.array([70, 255, 255])
-            lower_blue = np.array([100, 50, 50])
-            upper_blue = np.array([130, 255, 255])
-            lower_yellow = np.array([20, 50, 50])
-            upper_yellow = np.array([40, 255, 255])
-
-            mask_red = cv2.inRange(img_hsv, lower_red, upper_red)
-            mask_green = cv2.inRange(img_hsv, lower_green, upper_green)
-            mask_blue = cv2.inRange(img_hsv, lower_blue, upper_blue)
-            mask_yellow = cv2.inRange(img_hsv, lower_yellow, upper_yellow)
-
-            contours_red, _ = cv2.findContours(mask_red, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-            contours_green, _ = cv2.findContours(mask_green, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-            contours_blue, _ = cv2.findContours(mask_blue, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-            contours_yellow, _ = cv2.findContours(mask_yellow, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-            contours = [contours_red, contours_green, contours_blue, contours_yellow]
-            max_contour_area = 0
-            max_contour_color = None
-            for i, color_contours in enumerate(contours):
-                if len(color_contours) > 0:
-                    contour_area = max(cv2.contourArea(contour) for contour in color_contours)
-                    if contour_area > max_contour_area:
-                        max_contour_area = contour_area
-                        max_contour_color = i
-
-            colors = ["Red", "Green", "Blue", "Yellow"]
-            if max_contour_color is not None:
-                print("[+] Detected color is : " , colors[max_contour_color])
-                return colors[max_contour_color]
-            else:
-                return None
-
-        except (FileNotFoundError, cv2.error) as e:
-            print(f"Error: {e}")
-            return None
+def _get_rgb(self) -> tuple:
+    try:
+        self._capture("temp.jpg")
+        img = cv2.imread("temp.jpg")
+        img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 ```
 
-Die Methode `_get_rgb` verwendet das zuvor definierte `_capture`, um ein Bild aufzunehmen und die Farben darin zu erkennen. Zuerst wird das aufgenommene Bild geladen und in den HSV-Farbraum konvertiert. Anschließend werden Farbschwellenwerte für Rot, Grün, Blau und Gelb definiert, um Farbbereiche zu bestimmen.
+- Funktion beginnt mit einem `try-except`-Block, um Fehler während der Ausführung abzufangen.
+- Methode `_capture("temp.jpg")` wird aufgerufen, um ein Bild aufzunehmen und als "temp.jpg" zu speichern.
+- Bild wird mit `cv2.imread("temp.jpg")` eingelesen und in der Variable `img` gespeichert.
+- Eingelesene Bild wird von BGR (Blau-Grün-Rot)-Farbraum in HSV (Hue-Saturation-Value)-Farbraum mit `cv2.cvtColor(img, cv2.COLOR_BGR2HSV)` konvertiert.
 
-Mit diesen Schwellenwerten werden Masken erstellt, die die Bereiche im Bild markieren, die den Farben entsprechen. Die Masken werden dann verwendet, um Konturen zu finden, die die erkannten Farbbereiche darstellen. Für jede Farbe wird die Kontur mit der größten Fläche ausgewählt.
+```python
+lower_red = np.array([0,50, 50])
+upper_red = np.array([10, 255, 255])
+lower_green = np.array([50, 50, 50])
+upper_green = np.array([70, 255, 255])
+lower_blue = np.array([100, 50, 50])
+upper_blue = np.array([130, 255, 255])
+lower_yellow = np.array([20, 50, 50])
+upper_yellow = np.array([40, 255, 255])
+```
+
+- Hier werden die Bereichsgrenzen für die verschiedene Farben (Rot, Grün, Blau, Gelb) im HSV-Farbraum definiert. Die unteren (lower) und oberen (upper) Grenzwerte sind als NumPy-Arrays angegeben.
+
+```python
+mask_red = cv2.inRange(img_hsv, lower_red, upper_red)
+mask_green = cv2.inRange(img_hsv, lower_green, upper_green)
+mask_blue = cv2.inRange(img_hsv, lower_blue, upper_blue)
+mask_yellow = cv2.inRange(img_hsv, lower_yellow, upper_yellow)
+```
+
+- Die Funktion `cv2.inRange()` wird verwendet, um Masken für jede Farbe zu erstellen. Die Masken definieren, welche Pixel im Bild im angegebenen Farbbereich liegen.
+
+```python
+contours_red, _ = cv2.findContours(mask_red, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+contours_green, _ = cv2.findContours(mask_green, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+contours_blue, _ = cv2.findContours(mask_blue, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+contours_yellow, _ = cv2.findContours(mask_yellow, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+```
+
+- Die Funktion `cv2.findContours()` wird auf die Masken angewendet, um die Konturen der farbigen Objekte zu finden. Die Konturen werden in den Variablen `contours_red`, `contours_green`, `contours_blue` und `contours_yellow` gespeichert.
+
+```python
+contours = [contours_red, contours_green, contours_blue, contours_yellow]
+max_contour_area = 0
+max_contour_color = None
+for i, color_contours in enumerate(contours):
+    if len(color_contours) > 0:
+        contour_area = max(cv
+
+2.contourArea(contour) for contour in color_contours)
+        if contour_area > max_contour_area:
+            max_contour_area = contour_area
+            max_contour_color = i
+```
+
+- Die Konturen für jede Farbe werden in einer Liste `contours` gespeichert. Es wird die Farbe mit der größten Konturfläche ermittelt, indem die Fläche jeder Kontur berechnet wird und der Index des Farbarrays `colors` aktualisiert wird.
+
+```python
+colors = ["Red", "Green", "Blue", "Yellow"]
+if max_contour_color is not None:
+    print("[+] Detected color is: ", colors[max_contour_color])
+    return colors[max_contour_color]
+else:
+    return None
+```
+
+- Eine Liste `colors` mit den Namen der Farben wird erstellt.
+- Wenn eine vorherrschende Farbe erkannt wurde (d.h. `max_contour_color` ist nicht None), wird die erkannte Farbe ausgegeben und zurückgegeben.
+- Andernfalls wird None zurückgegeben.
+- Falls während des Try-Blocks eine `FileNotFoundError` oder eine `cv2.error`-Ausnahme auftritt, wird der Fehler ausgegeben und ebenfalls None zurückgegeben.
 
 Die erkannte Farbe wird als Text ausgegeben, und der Name der Farbe wird als Rückgabewert der Methode verwendet. Falls keine Farbe erkannt wird oder ein Fehler auftritt, wird `None` zurückgegeben.
 
