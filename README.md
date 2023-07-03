@@ -46,7 +46,7 @@ import datetime
 from scan import Scan
 ```
 
-Der Code beginnt mit den erforderlichen Importanweisungen, um die verwendeten Bibliotheken und Module zu importieren. Diese umfassen `sys`, `cv2` aus OpenCV für die Kamerasteuerung und Bildverarbeitung, `numpy` für numerische Berechnungen, `Image` aus PIL für die Bildmanipulation, `keyboard` für die Tastatureingabe, `time` für die Zeitsteuerung und `datetime` für die Zeitangabe. Zusätzlich wird `scan` importiert, was vermutlich eine benutzerdefinierte Klasse ist, die nicht im gegebenen Codeausschnitt enthalten ist.
+Der Code beginnt mit den erforderlichen Importanweisungen, um die verwendeten Bibliotheken und Module zu importieren. Diese umfassen `sys`, `cv2` aus OpenCV für die Kamerasteuerung und Bildverarbeitung, `numpy` für numerische Berechnungen, `Image` aus PIL für die Bildmanipulation, `keyboard` für die Tastatureingabe, `time` für die Zeitsteuerung und `datetime` für die Zeitangabe. Zusätzlich wird `scan` importiert
 
 ```python
 class Camera:
