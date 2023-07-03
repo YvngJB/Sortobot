@@ -81,9 +81,7 @@ Die Methode `_capture` erfasst ein Bild von der Kamera und speichert es in einem
             img = cv2.imread("temp.jpg")
             img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 
-            lower_red = np.array([0,
-
- 50, 50])
+            lower_red = np.array([0,50, 50])
             upper_red = np.array([10, 255, 255])
             lower_green = np.array([50, 50, 50])
             upper_green = np.array([70, 255, 255])
