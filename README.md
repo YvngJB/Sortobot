@@ -312,11 +312,11 @@ sh.shardCollection("team7.scans", {_id:1})
 
 # Node-Red Visualisierung
 - Zuerst wird wie damals im LF8 eine Abfrage der Daten vorgenommen. Als Beispiel haben wir hier die Abfrage der Varivable "Farbe", welche im OPC/UA Server als "data" hinterlegt ist  <br>
-![image](https://github.com/YvngJB/Sortobot/assets/58107378/692695e3-78fa-4142-bc9f-713238f06445)  <br>
+![image](https://github.com/YvngJB/Sortobot/assets/58107378/692695e3-78fa-4142-bc9f-713238f06445)  <br><br>
 - Danach kommt die Node des OPC/UA Client, dessen Einstellungen auf den Server angepasst wurden  <br>
-![image](https://github.com/YvngJB/Sortobot/assets/58107378/7531c02e-b880-4a47-ad70-31e0f76681c5)  <br>
+![image](https://github.com/YvngJB/Sortobot/assets/58107378/7531c02e-b880-4a47-ad70-31e0f76681c5)  <br><br>
 - Im Anschluss wurde dann das Dashboard Element ausgeählt, in welchem Format die Abfrage visualisiert werden soll. Im Fall der Farbe wäre dies einfach nur als Text  <br>
-![image](https://github.com/YvngJB/Sortobot/assets/58107378/08655f5b-33ec-4bb9-b226-dbfa56df1d20)  <br>
+![image](https://github.com/YvngJB/Sortobot/assets/58107378/08655f5b-33ec-4bb9-b226-dbfa56df1d20)  <br><br>
 - Dies wurde anschließen noch für die Temperatur, die Luftfeuchtigkeit und die Energiekosten gemacht
 
 
