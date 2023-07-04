@@ -308,4 +308,9 @@ sh.shardCollection("team7.scans", {_id:1})
   
         
   - Auf dieser haben wir dann die Messdaten gelogt, die vom PC1 übermittelt wurden
-  - Um eine Benutzerfreundliche Ansicht der Daten zu gewährleisten, haben wir diese per NodeRed visualisiert. So können nun jegliche Endgeräte auf diese Informationen zureifen  
+  - Um eine Benutzerfreundliche Ansicht der Daten zu gewährleisten, haben wir diese per NodeRed visualisiert. So können nun jegliche Endgeräte auf diese Informationen zureifen
+
+# Node-Red Visualisierung
+- Zuerst wird wie damals im LF8 eine Abfrage der Daten vorgenommen. Als Beispiel haben wir hier die Abfrage der Varivable "Farbe", welche im OPC/UA Server als "data" hinterlegt ist
+![image](https://github.com/YvngJB/Sortobot/assets/58107378/692695e3-78fa-4142-bc9f-713238f06445)
+
