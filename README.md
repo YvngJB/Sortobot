@@ -185,9 +185,9 @@ Nach Aufgabenstellung mussten wir auf einer VM eine MongoDB Datenbank installier
 
 Schritt 1: Erstellen der Verzeichnisse
 
- > mkdir mongo
- > mkdir con1 con2 shard10 shard11 shard20 shard21
-
+``` > mkdir mongo
+ > mkdir con1 con2 shard21 shard22 shard31 shard32
+```
 Schritt 2: Konfigurationsserver einrichten
 
  > mongod --configsvr --dbpath con2 --port 20002 --fork --logpath con2.log -- replSet con
