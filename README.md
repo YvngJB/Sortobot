@@ -185,101 +185,106 @@ Nach Aufgabenstellung mussten wir auf einer VM eine MongoDB Datenbank installier
 
 Schritt 1: Erstellen der Verzeichnisse
 
-``` > mkdir mongo
- > mkdir con1 con2 shard21 shard22 shard31 shard32
+```
+ mkdir mongo
+ mkdir con1 con2 shard21 shard22 shard31 shard32
 ```
 Schritt 2: Konfigurationsserver einrichten
-
- > mongod --configsvr --dbpath con2 --port 20002 --fork --logpath con2.log -- replSet con
-
+```
+mongod --configsvr --dbpath con1 --port 27011 --fork --logpath con1.log --replSet con
+mongod --configsvr --dbpath con2 --port 27012 --fork --logpath con2.log --replSet con
+```
 Schritt 3: Replica Set für den Konfigurationsserver initialisieren
 
 Shell starten:
-
- > mongo --port 20001
-
+```
+mongosh --port 27011
+```
 In der Shell das Replica Set für den Konfigurationsserver initialisieren:
-
-  > rs.initiate()
-  > rs.add("localhost:20002")
-  > rs.status()
-  > exit
-
+```
+rs.initiate()
+rs.add("localhost:27012")
+rs.status()
+exit
+```
 Schritt 4: Shardserver für Shard 1 einrichten
 
 Shard1 - Server1:
- > mongod --shardsvr --replSet shard1 --dbpath shard10 --port 21001 --fork --logpath shard1.log
-
+```
+mongod --shardsvr --replSet shard1 --dbpath shard21 --port 27021 --fork --logpath shard1.log
+```
 Shard1 - Server2:
- > mongod --shardsvr --replSet shard1 --dbpath shard11 --port 21002 --fork --logpath shard1.log
-
+```
+mongod --shardsvr --replSet shard1 --dbpath shard22 --port 27022 --fork --logpath shard1.log
+```
 Schritt 5: Replica Set für Shard 1 initialisieren
 
 Shell starten:
-
- > mongo --port 21001
-
+```
+mongosh --port 27021
+```
 In der Shell das Replica Set für den Shard 1 initialisieren:
+```
+rs.initiate()
+rs.add("localhost:27022")
+exit
 
-  > rs.initiate()
-  > rs.add("localhost:21002")
-  > exit
-
+```
 Schritt 6: Shardserver für Shard 2 einrichten
 
 Shard 2 - Server 1:
-
- > mongod --shardsvr --replSet shard2 --dbpath shard20 --port 22001 --fork --logpath shard2.log
-
+```
+mongod --shardsvr --replSet shard2 --dbpath shard31 --port 27031 --fork --logpath shard2.log 
+```
 Shard 2 - Server 2:
-
- > mongod --shardsvr --replSet shard2 --dbpath shard21 --port 22002 --fork --logpath shard2.log
-
+```
+mongod --shardsvr --replSet shard2 --dbpath shard32 --port 27032 --fork --logpath shard2.log
+```
 Schritt 7: Replica Set für Shard 2 initialisieren:
 
 Shell starten:
-
-  >mongo --port 22001
-
+```
+mongosh --port 27031
+```
 In der Shell das Replica Set für den Shard 2 initialisieren:
-
-  > rs.initiate()
-  > rs.add("localhost:22002")
-  > exit
-
+```
+rs.initiate()
+rs.add("localhost:27032")
+exit
+```
 Schritt 8: Mongos-Prozess starten
-
- > mongos --configdb "con/localhost:20001,localhost:20002" --fork --logpath mongos1.log --port 20000
-
+```
+mongos --configdb "con/localhost:27011,localhost:27012" --fork --logpath mongos1.log --port 27017 --bind_ip_all
+```
 Schritt 9: Verbinden mit dem Mongos-Prozess und Konfigurieren der Shards
 
 MongoDB Shell öffnen:
-
- > mongo --port 20000
-
+```
+mongosh --port 27017
+```
 Shards konfigurieren:
-
-  > sh.addShard("shard1/localhost:21001")
-  > sh.addShard("shard2/localhost:22001")
-
+```
+sh.addShard("shard1/localhost:27021")
+sh.addShard("shard2/localhost:27031")
+```
 Schritt 10: Sharding aktivieren
 
 Datenbank anlegen:
-
- > use team7
-
+```
+use team7
+```
 Sharding für die Datenbank aktivieren:
-
- > sh.enableSharding("team7")
-
+```
+ sh.enableSharding("team7")
+```
 Eine Sammlung erstellen die geshardet werden soll:
-
->  db.createCollection("scans")
-
+```
+db.createCollection("scans")
+```
 Sharden der erstellten Sammlung:
-
- > sh.shardCollection("team7.scans", {_id:1})
-
+```
+sh.shardCollection("team7.scans", {_id:1})
+```
   
         
   - Auf dieser haben wir dann die Messdaten gelogt, die vom PC1 übermittelt wurden
