@@ -249,7 +249,11 @@ mongosh --port 27031
 In der Shell das Replica Set für den Shard 2 initialisieren:
 ```
 rs.initiate()
+```
+```
 rs.add("localhost:27032")
+```
+```
 exit
 ```
 Schritt 8: Mongos-Prozess starten
@@ -265,6 +269,8 @@ mongosh --port 27017
 Shards konfigurieren:
 ```
 sh.addShard("shard1/localhost:27021")
+```
+```
 sh.addShard("shard2/localhost:27031")
 ```
 Schritt 10: Sharding aktivieren
