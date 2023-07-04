@@ -187,11 +187,15 @@ Schritt 1: Erstellen der Verzeichnisse
 
 ```
  mkdir mongo
+```
+```
  mkdir con1 con2 shard21 shard22 shard31 shard32
 ```
 Schritt 2: Konfigurationsserver einrichten
 ```
 mongod --configsvr --dbpath con1 --port 27011 --fork --logpath con1.log --replSet con
+```
+```
 mongod --configsvr --dbpath con2 --port 27012 --fork --logpath con2.log --replSet con
 ```
 Schritt 3: Replica Set für den Konfigurationsserver initialisieren
@@ -203,8 +207,14 @@ mongosh --port 27011
 In der Shell das Replica Set für den Konfigurationsserver initialisieren:
 ```
 rs.initiate()
+```
+```
 rs.add("localhost:27012")
+```
+```
 rs.status()
+```
+```
 exit
 ```
 Schritt 4: Shardserver für Shard 1 einrichten
@@ -226,7 +236,11 @@ mongosh --port 27021
 In der Shell das Replica Set für den Shard 1 initialisieren:
 ```
 rs.initiate()
+```
+```
 rs.add("localhost:27022")
+```
+```
 exit
 
 ```
