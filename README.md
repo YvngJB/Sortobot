@@ -163,6 +163,77 @@ Die erkannte Farbe wird als Text ausgegeben, und der Name der Farbe wird als Rü
 
 Die Methode `scan` ruft `_get_rgb` auf und gibt den erkannten Farbwert zurück, sofern einer erkannt wurde. Andernfalls wird `None` zurückgegeben.
 
+# Dokumentation des Codes
+
+## Einleitung
+Diese Dokumentation erklärt den bereitgestellten Code, der einen einfachen Client implementiert, der eine Verbindung zu einem Server herstellt, eine Anfrage sendet und die Antwort empfängt. Der Code ist in Python geschrieben und verwendet die `socket`-Bibliothek, um Netzwerkverbindungen herzustellen.
+
+## Import der `socket`-Bibliothek
+```python
+import socket
+```
+Die `socket`-Bibliothek, die die grundlegenden Funktionen zum Erstellen von Netzwerkverbindungen bereitstellt wird impotiert. Sie wird verwendet, um eine TCP-Verbindung zu einem Server herzustellen und Daten zu senden und zu empfangen.
+
+## Definition der `Client`-Klasse
+```python
+class Client:
+    def __init__(self, host: str, port: int) -> None:
+        self.host = host
+        self.port = port
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+```
+Diese `Client`-Klasse repräsentiert den Client und enthält Methoden zum Herstellen einer Verbindung, zum Senden einer Anfrage, zum Empfangen einer Antwort und zum Schließen der Verbindung. Beim Initialisieren eines `Client`-Objekts werden der `host` (Hostname oder IP-Adresse des Servers) und der `port` (Portnummer des Servers) übergeben. Es wird auch ein Socket-Objekt `self.s` erstellt, das für die Netzwerkkommunikation verwendet wird.
+
+## Herstellen der Verbindung
+```python
+def connect(self):
+    self.s.connect((self.host, self.port))
+    print(f"[+] connected to {self.host}:{self.port}")
+```
+Die Methode `connect` wird verwendet, um eine Verbindung zum Server herzustellen. Sie ruft die `connect`-Methode des Socket-Objekts `self.s` auf und übergibt dabei das Serveradressentupel `(self.host, self.port)`. Nach erfolgreicher Verbindung wird eine Bestätigungsnachricht ausgegeben.
+
+## Senden einer Anfrage
+```python
+def send_request(self):
+    request = "get"
+    self.s.sendall(request.encode("ascii"))
+    print(f"[+] request sent: {request}")
+```
+Die Methode `send_request` sendet eine Anfrage an den Server. Hier wird eine einfache Anfrage mit dem Inhalt "get" erstellt und an den Server gesendet. Die Anfrage wird als Byte-String mit der Methode `encode` in das ASCII-Format umgewandelt und mit `sendall` über den Socket `self.s` gesendet. Eine Bestätigungsnachricht wird ausgegeben.
+
+## Empfangen der Antwort
+```python
+def receive_response(self):
+    response = self.s.recv(1024).decode("ascii")
+    print(f"[+] response received: {response}")
+    return response
+```
+Die Methode `receive_response` empfängt die Antwort vom Server. Sie ruft die `recv`-Methode des Socket-Objekts `self.s` auf und gibt an, dass maximal 1024 Bytes empfangen werden sollen. Die empfangenen Daten werden als Byte-String empfangen und
+
+ mit `decode` in das ASCII-Format umgewandelt. Die Antwort wird als String zurückgegeben und eine Bestätigungsnachricht wird ausgegeben.
+
+## Schließen der Verbindung
+```python
+def close(self):
+    self.s.close()
+```
+Die Methode `close` wird verwendet, um die Verbindung zum Server zu schließen. Sie ruft die `close`-Methode des Socket-Objekts `self.s` auf, um die Verbindung ordnungsgemäß zu beenden.
+
+
+```python
+if __name__ == "__main__":
+    client = Client("localhost", 5678)  # Customize Host and Port
+    client.connect()
+
+    client.send_request()
+
+    response = client.receive_response()
+    # Handle received answer
+
+    client.close()
+```
+Ein `Client`-Objekt erstellt, indem der `host` (hier "localhost") und der `port` (hier 5678) übergeben werden. Anschließend wird eine Verbindung zum Server hergestellt, eine Anfrage gesendet, die Antwort empfangen und schließlich die Verbindung geschlossen. Der empfangene Antwortwert kann je nach Anwendungsfall weiterverarbeitet werden.
+
 #
 # 2) PC1
 Aufgaben des PC1:
